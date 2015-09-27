@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Week 4 Assignment Axel Verheul 10744185</title>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<link rel="stylesheet" href="{{ url_for('static', filename='stylesheets/style.css') }}">
+	</head>
+	<body>
+		<h1>Querying Ikea Food Department</h1>
+		<h6>Axel Verheul - 10744185</h6>
+
+		<h4> Query Database </h4>
+		<p>
+			Type a SPARQL query in the textarea and explore my Ikea food rdf. Turn inferencing on or off with the checkbox.
+		</p>
+		<textarea id="query" style='width: 100%' rows='12'>
+PREFIX ikea: <http://www.ikeafood.com/ontologies/ikeafood.ttl#>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+
+SELECT * WHERE {
+  ?menu a ikea:MenuItem
+}
+		</textarea>
+		<p>
+			<button id='search'>Search</button>
+			<input type='checkbox' id='checkbox'> Inferencing
+		</p>
+		<pre><code id='resultbox'>The results wil show here</code></pre>
+	</body>
+
+	<script type="text/javascript" src="{{ url_for('static', filename='js/jquery-1.11.0.min.js') }}"></script>
+	<script type="text/javascript" src="{{ url_for('static', filename='js/main.js') }}"></script>
+
+</html>

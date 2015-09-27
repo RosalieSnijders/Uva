@@ -1,0 +1,266 @@
+@prefix : <http://www.ikeafood.com/ontologies/ikeafood.ttl#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xml: <http://www.w3.org/XML/1998/namespace> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@base <http://www.ikeafood.com/ontologies/ikeafood.ttl> .
+
+<http://www.ikeafood.com/ontologies/ikeafood.ttl> rdf:type owl:Ontology .
+
+
+#################################################################
+#
+#    Object Properties
+#
+#################################################################
+
+
+###  http://www.ikeafood.com/ontologies/ikeafood.ttl#hasItem
+
+:hasItem rdf:type owl:ObjectProperty ,
+                  owl:TransitiveProperty ;
+         
+         owl:inverseOf :isItemOf .
+
+
+
+###  http://www.ikeafood.com/ontologies/ikeafood.ttl#hasMain
+
+:hasMain rdf:type owl:ObjectProperty ,
+                  owl:TransitiveProperty ;
+         
+         rdfs:subPropertyOf :hasItem ;
+         
+         owl:inverseOf :isMainOf .
+
+
+
+###  http://www.ikeafood.com/ontologies/ikeafood.ttl#hasSide
+
+:hasSide rdf:type owl:ObjectProperty ,
+                  owl:TransitiveProperty ;
+         
+         rdfs:subPropertyOf :hasItem ;
+         
+         owl:inverseOf :isSideOf .
+
+
+
+###  http://www.ikeafood.com/ontologies/ikeafood.ttl#isItemOf
+
+:isItemOf rdf:type owl:ObjectProperty ,
+                   owl:TransitiveProperty .
+
+
+
+###  http://www.ikeafood.com/ontologies/ikeafood.ttl#isMainOf
+
+:isMainOf rdf:type owl:ObjectProperty ,
+                   owl:TransitiveProperty ;
+          
+          rdfs:subPropertyOf :isItemOf .
+
+
+
+###  http://www.ikeafood.com/ontologies/ikeafood.ttl#isSideOf
+
+:isSideOf rdf:type owl:ObjectProperty ,
+                   owl:TransitiveProperty ;
+          
+          rdfs:subPropertyOf :isItemOf .
+
+
+
+
+
+#################################################################
+#
+#    Classes
+#
+#################################################################
+
+
+###  http://www.ikeafood.com/ontologies/ikeafood.ttl#BuffetItem
+
+:BuffetItem rdf:type owl:Class ;
+            
+            rdfs:subClassOf :IkeaFood .
+
+
+
+###  http://www.ikeafood.com/ontologies/ikeafood.ttl#ChildMenu
+
+:ChildMenu rdf:type owl:Class ;
+           
+           owl:equivalentClass [ rdf:type owl:Class ;
+                                 owl:intersectionOf ( [ rdf:type owl:Restriction ;
+                                                        owl:onProperty :hasMain ;
+                                                        owl:hasValue :swedishMeatballs
+                                                      ]
+                                                      [ rdf:type owl:Restriction ;
+                                                        owl:onProperty :hasSide ;
+                                                        owl:hasValue :mashedPotatoes
+                                                      ]
+                                                    )
+                               ] ;
+           
+           rdfs:subClassOf :IkeaFood ,
+                           [ rdf:type owl:Class ;
+                             owl:intersectionOf ( [ rdf:type owl:Restriction ;
+                                                    owl:onProperty :hasMain ;
+                                                    owl:hasValue :swedishMeatballs
+                                                  ]
+                                                  [ rdf:type owl:Restriction ;
+                                                    owl:onProperty :hasSide ;
+                                                    owl:hasValue :mashedPotatoes
+                                                  ]
+                                                )
+                           ] .
+
+
+
+###  http://www.ikeafood.com/ontologies/ikeafood.ttl#IkeaFood
+
+:IkeaFood rdf:type owl:Class .
+
+
+
+###  http://www.ikeafood.com/ontologies/ikeafood.ttl#Main
+
+:Main rdf:type owl:Class ;
+      
+      rdfs:subClassOf :BuffetItem .
+
+
+
+###  http://www.ikeafood.com/ontologies/ikeafood.ttl#MenuItem
+
+:MenuItem rdf:type owl:Class ;
+          
+          owl:equivalentClass [ rdf:type owl:Restriction ;
+                                owl:onProperty :hasItem ;
+                                owl:someValuesFrom :Main
+                              ] ;
+          
+          rdfs:subClassOf :IkeaFood .
+
+
+
+###  http://www.ikeafood.com/ontologies/ikeafood.ttl#Potatoes
+
+:Potatoes rdf:type owl:Class ;
+          
+          owl:equivalentClass [ rdf:type owl:Class ;
+                                owl:oneOf ( :mashedPotatoes
+                                            :bakedPotatoes
+                                          )
+                              ] ;
+          
+          rdfs:subClassOf :Side .
+
+
+
+###  http://www.ikeafood.com/ontologies/ikeafood.ttl#Side
+
+:Side rdf:type owl:Class ;
+      
+      rdfs:subClassOf :BuffetItem .
+
+
+
+
+
+#################################################################
+#
+#    Individuals
+#
+#################################################################
+
+
+###  http://www.ikeafood.com/ontologies/ikeafood.ttl#bakedPotatoes
+
+:bakedPotatoes rdf:type :Potatoes ,
+                        owl:NamedIndividual .
+
+
+
+###  http://www.ikeafood.com/ontologies/ikeafood.ttl#fishMenu
+
+:fishMenu rdf:type owl:NamedIndividual ;
+          
+          :hasSide :bakedPotatoes ;
+          
+          :hasMain :salmonSalad .
+
+
+
+###  http://www.ikeafood.com/ontologies/ikeafood.ttl#largeMeatballMenu
+
+:largeMeatballMenu rdf:type owl:NamedIndividual ;
+                   
+                   :hasSide :mashedPotatoes ;
+                   
+                   :hasItem :meatballMenu .
+
+
+
+###  http://www.ikeafood.com/ontologies/ikeafood.ttl#mashedPotatoes
+
+:mashedPotatoes rdf:type :Potatoes ,
+                         owl:NamedIndividual .
+
+
+
+###  http://www.ikeafood.com/ontologies/ikeafood.ttl#meatballMenu
+
+:meatballMenu rdf:type owl:NamedIndividual ;
+              
+              :hasSide :mashedPotatoes ;
+              
+              :hasMain :swedishMeatballs .
+
+
+
+###  http://www.ikeafood.com/ontologies/ikeafood.ttl#salmonSalad
+
+:salmonSalad rdf:type :Main ,
+                      owl:NamedIndividual .
+
+
+
+###  http://www.ikeafood.com/ontologies/ikeafood.ttl#swedishMeatballs
+
+:swedishMeatballs rdf:type :Main ,
+                           owl:NamedIndividual .
+
+
+
+
+
+#################################################################
+#
+#    General axioms
+#
+#################################################################
+
+
+[ rdf:type owl:AllDifferent ;
+  owl:distinctMembers ( :bakedPotatoes
+                        :mashedPotatoes
+                        :salmonSalad
+                        :swedishMeatballs
+                      )
+] .
+[ rdf:type owl:AllDifferent ;
+  owl:distinctMembers ( :fishMenu
+                        :largeMeatballMenu
+                        :meatballMenu
+                      )
+] .
+
+
+
+
+###  Generated by the OWL API (version 3.5.1) http://owlapi.sourceforge.net
+
